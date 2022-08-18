@@ -5,7 +5,7 @@ from imgui.integrations.glfw import GlfwRenderer
 from components.path import Path
 from OpenGL.GL import glClearColor
 
-# handle all ui rendering and flags
+# all ui rendering and flags
 class UI():
 
     # imgui window flags (settings for very basic use)

@@ -166,7 +166,7 @@ class Scene():
 
         # draw each segment of each arc of the curve (every point of the curve)
         if self.showSegments:
-            # set slightly different colour for segments of curve
+            # use slightly different colour for segments of curve
             colour = glm.vec4(0.8, 0.8, 0.8, 0.7)
             glUniform4fv(self.col_uni, 1, glm.value_ptr(colour))
             glPointSize(1)

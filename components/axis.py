@@ -27,7 +27,7 @@ class Axis():
         # gen vertex array and buffer for axis
         self.vao = glGenVertexArrays(1)
         self.vbo = glGenBuffers(1)
-        glBindVertexArray(self.vao) # bind vao, all further buffer operation bound to array
+        glBindVertexArray(self.vao) # bind vao, all further buffer operations bound to this array
         
         # bind and upload vertex data to buffer
         glBindBuffer(GL_ARRAY_BUFFER, self.vbo)

@@ -17,23 +17,19 @@ class Path():
         self.points.extend([0, 0, 0])   # always start at origin
 
         # generate a point to go to from origin
-        for i in range(0, 1):
-            self.points.extend(numpy.random.uniform(low=-5, high=5, size=3))
+        self.points.extend(numpy.random.uniform(low=-5, high=5, size=3))
 
-    
         self.controls = []  # holds all the control points
 
         # generate one initial control point for the origin and second point
-        for i in range(0, 1):
-            self.controls.extend(numpy.random.uniform(low=-5, high=5, size=3))
+        self.controls.extend(numpy.random.uniform(low=-5, high=5, size=3))
 
         # curve holds all arcs 
         self.curve = []
 
 
         # generate a smooth path of a number of segments between the arcs endpoints
-        # This is the bezier curve generation 
-        # using QUADRATIC bezier.
+        # (quadratic bezier part)
         for i in range(0, Path.arcsegments):
             # parameter t increasing along path
             t = (i)/(Path.arcsegments-1)
@@ -66,20 +62,26 @@ class Path():
             self.addArc()   # same process
 
         # send stored lists of vertex positions for the arc endpoints, controls and segments
-        # into arrays of float32s before use with opengl buffer 
+        # into arrays of float32s before use with opengl
         self.gcurve = glm.array(glm.float32, *self.curve)
         self.gpoints = glm.array(glm.float32, *self.points)
         self.gcontrols = glm.array(glm.float32, *self.controls)
         
         # generate vaos/vbos for path objects 
+        """
         self.pathvao = glGenVertexArrays(1)
         self.pathvbo = glGenBuffers(1)
         self.pointsvao = glGenVertexArrays(1)
         self.pointsvbo = glGenBuffers(1)
         self.controlsvao = glGenVertexArrays(1)
         self.controlsvbo = glGenBuffers(1)
+        """
 
-        # uplaod all path data to buffers and vao for them
+        self.pathvao, self.pointsvao, self.controlsvao = glGenVertexArrays(3)
+        self.pathvbo, self.pointsvbo, self.controlsvbo = glGenBuffers(3)
+
+
+        # upload all path data to buffers and vao for them
         self.bufferObject(self.pathvao, self.pathvbo, self.gcurve)
         self.bufferObject(self.pointsvao, self.pointsvbo, self.gpoints)
         self.bufferObject(self.controlsvao, self.controlsvbo, self.gcontrols)
@@ -138,9 +140,5 @@ class Path():
 
     # delete buffer data and vao
     def __del__(self):
-        glDeleteVertexArrays(1, (self.pathvao,))
-        glDeleteBuffers(1, (self.pathvbo,))
-        glDeleteVertexArrays(1, (self.pointsvao,))
-        glDeleteBuffers(1, (self.pointsvbo,))
-        glDeleteVertexArrays(1, (self.controlsvao,))
-        glDeleteBuffers(1, (self.controlsvbo,))
+        glDeleteVertexArrays(3, (self.pathvao, self.pointsvao, self.controlsvao))
+        glDeleteBuffers(3, (self.pathvbo, self.pointsvbo, self.controlsvbo))
