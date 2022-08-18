@@ -68,15 +68,6 @@ class Path():
         self.gcontrols = glm.array(glm.float32, *self.controls)
         
         # generate vaos/vbos for path objects 
-        """
-        self.pathvao = glGenVertexArrays(1)
-        self.pathvbo = glGenBuffers(1)
-        self.pointsvao = glGenVertexArrays(1)
-        self.pointsvbo = glGenBuffers(1)
-        self.controlsvao = glGenVertexArrays(1)
-        self.controlsvbo = glGenBuffers(1)
-        """
-
         self.pathvao, self.pointsvao, self.controlsvao = glGenVertexArrays(3)
         self.pathvbo, self.pointsvbo, self.controlsvbo = glGenBuffers(3)
 
